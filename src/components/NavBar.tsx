@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Box, Flex, Text, chakra, Image } from "@chakra-ui/react";
 import logo from '../imports/waterlevel_logo22_white.png';
-import config from '../../public/config.json';
 
 const links = [
   { name: "Возможности", id: "features" },
@@ -38,6 +37,8 @@ export default function NavBar() {
       element?.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const APP_HOST = window.__APP_CONFIG__?.HOST || "https://46.191.175.34/";
 
   return (
     <MotionHeader
@@ -96,7 +97,7 @@ export default function NavBar() {
         </Box>
 
         <Flex display={{ base: "none", md: "flex" }} align="center" gap="3">
-           <chakra.a href={config.HOST} fontSize="sm" color="white/60" transition="color 200ms" px="3" _hover={{ color: "white" }}>
+           <chakra.a href={APP_HOST} fontSize="sm" color="white/60" transition="color 200ms" px="3" _hover={{ color: "white" }}>
             Войти
           </chakra.a>
           <chakra.a

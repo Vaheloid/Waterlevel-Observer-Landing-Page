@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Gauge, Activity, Zap } from "lucide-react";
 import { Box, Flex, Text, chakra } from "@chakra-ui/react";
-import config from '../../public/config.json';
 
 interface GlowItem {
   color: string;
@@ -50,6 +49,8 @@ export default function HeroSection() {
       window.lenis.scrollTo(`#${id}`, { offset: -90 });
     }
   };
+
+  const APP_HOST = window.__APP_CONFIG__?.HOST || "https://46.191.175.34/";
 
   return (
     <Box
@@ -249,7 +250,7 @@ export default function HeroSection() {
           </chakra.a>
           
           <chakra.a
-            href={config.HOST}
+            href={APP_HOST}
             display="flex"
             alignItems="center"
             justifyContent="center"

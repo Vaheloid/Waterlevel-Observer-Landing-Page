@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { useRef } from "react";
 import { useInView } from "framer-motion";
 import { ArrowRight, Mail } from "lucide-react";
-import config from '../../public/config.json';
 
 const MotionBox = motion(Box);
 const MotionText = motion(Text);
@@ -19,6 +18,8 @@ export default function CtaSection() {
       window.lenis.scrollTo(`#${id}`, { offset: -90 });
     }
   };
+
+  const APP_HOST = window.__APP_CONFIG__?.HOST || "https://46.191.175.34/";
 
   return (
     <Box 
@@ -153,7 +154,7 @@ export default function CtaSection() {
             </chakra.a>
 
             <chakra.a
-              href={config.HOST}
+              href={APP_HOST}
               display="flex"
               alignItems="center"
               justifyContent="center"
