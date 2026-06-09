@@ -42,7 +42,6 @@ const pills = [
 ];
 
 export default function HeroSection() {
-  // Используем lenis для плавного скролла
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     if (window.lenis) {
@@ -61,7 +60,7 @@ export default function HeroSection() {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      px={{ base: "4", sm: "6" }}
+      px={{ base: "4", md: "6" }}
       overflow="hidden"
     >
       {/* Background glows */}
@@ -74,8 +73,9 @@ export default function HeroSection() {
           custom={g.i}
           variants={floatVariants}
           animate="animate"
-          w={`${g.size}px`}
-          h={`${g.size}px`}
+          // Сделали размеры glow адаптивными (на десктопе возвращаем исходные)
+          w={{ base: `${g.size}px`, md: `${g.size * 2}px` }}
+          h={{ base: `${g.size}px`, md: `${g.size * 2}px` }}
           top={g.top}
           left={g.left}
           right={g.right}
@@ -109,15 +109,17 @@ export default function HeroSection() {
           border="1px solid"
           borderColor="rgba(56, 189, 248, 0.1)"
           pointerEvents="none"
-          w={`${n * 280}px`}
-          h={`${n * 280}px`}
-          animate={{ scale: [1, 1.08, 1], opacity: [0.4, 0.1, 0.4] }}
+          // Адаптивный размер колец радара, чтобы они не ломали мобильный viewport
+          w={{ base: `${n * 160}px`, md: `${n * 280}px` }}
+          h={{ base: `${n * 160}px`, md: `${n * 280}px` }}
+          animate={{ scale: [1, 1.05, 1], opacity: [0.4, 0.1, 0.4] }}
           transition={{ duration: 5 + n * 1.5, repeat: Infinity, delay: n * 0.8, ease: "easeInOut" }}
         />
       ))}
 
       {/* Main Content */}
-      <Box position="relative" zIndex="10" maxW="5xl" mx="auto" textAlign="center" pt="28" pb="20">
+      {/* Уменьшили верхний и нижний паддинг для мобильных (pt="20" вместо pt="28") */}
+      <Box position="relative" zIndex="10" maxW="5xl" mx="auto" textAlign="center" pt={{ base: "20", md: "28" }} pb="20">
         
         {/* Badge */}
         <MotionFlex
@@ -130,7 +132,8 @@ export default function HeroSection() {
           px="4"
           py="1.5"
           borderRadius="full"
-          mb="8"
+          mb={{ base: "6", md: "8" }} // Меньше отступ на мобилке
+          maxW="100%" // Ограничение, чтобы не вылезало за края
           css={{
             background: "rgba(14, 165, 233, 0.1)",
             border: "1px solid rgba(14, 165, 233, 0.25)",
@@ -139,6 +142,7 @@ export default function HeroSection() {
           }}
         >
           <Box
+            flexShrink={0} // Точка не должна сжиматься при нехватке места
             w="1.5"
             h="1.5"
             borderRadius="full"
@@ -153,11 +157,14 @@ export default function HeroSection() {
           />
           <Text 
             color="rgba(125, 211, 252, 1)" 
-            fontSize="xs" 
+            fontSize={{ base: "10px", sm: "xs" }} // Меньше шрифт на совсем маленьких экранах
             fontWeight="medium" 
             letterSpacing="wider" 
             textTransform="uppercase"
             fontFamily="'Inter', sans-serif"
+            whiteSpace="nowrap" // Защита от некрасивого переноса "в реальном времени"
+            overflow="hidden"
+            textOverflow="ellipsis"
           >
             Система активна · Мониторинг в реальном времени
           </Text>
@@ -170,12 +177,12 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           style={{
             color: "white",
-            marginBottom: "24px",
+            marginBottom: "20px",
             fontFamily: "'Inter', sans-serif",
-            fontSize: "clamp(2.8rem, 7vw, 5rem)",
+            fontSize: "clamp(2.2rem, 6.5vw, 5rem)",
             fontWeight: 700,
             letterSpacing: "-0.03em",
-            lineHeight: 1.08,
+            lineHeight: 1.15,
           }}
         >
           Интеллектуальный
@@ -202,11 +209,12 @@ export default function HeroSection() {
           maxW="2xl"
           mx="auto"
           mb="10"
+          px={{ base: "2", sm: "0" }}
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: "clamp(1rem, 2vw, 1.15rem)",
+            fontSize: "clamp(0.95rem, 2vw, 1.15rem)",
             fontWeight: 300,
-            lineHeight: 1.7,
+            lineHeight: 1.6,
           }}
         >
           Прогнозирование и анализ паводковых ситуаций на основе данных гидрологических
@@ -223,12 +231,16 @@ export default function HeroSection() {
           justifyContent="center"
           gap="4"
           mb="16"
+          w="100%"
+          maxW={{ base: "xs", sm: "none" }}
+          mx="auto"
         >
           <chakra.a
             href="#footer"
             onClick={(e) => handleScroll(e, "footer")}
             display="flex"
             alignItems="center"
+            justifyContent="center"
             gap="2.5"
             px="7"
             py="3.5"
@@ -236,8 +248,9 @@ export default function HeroSection() {
             color="white"
             fontWeight="medium"
             transition="all 300ms"
-            _hover={{ transform: "scale(1.05)", textDecoration: "none" }}
-            _active={{ transform: "scale(0.95)" }}
+            w={{ base: "100%", sm: "auto" }}
+            _hover={{ transform: "scale(1.03)", textDecoration: "none" }}
+            _active={{ transform: "scale(0.97)" }}
             css={{
               fontFamily: "'Inter', sans-serif",
               fontSize: "0.95rem",
@@ -260,8 +273,9 @@ export default function HeroSection() {
             borderRadius="2xl"
             fontWeight="medium"
             transition="all 300ms"
-            _hover={{ bg: "rgba(255,255,255,0.1)", transform: "scale(1.05)", textDecoration: "none" }}
-            _active={{ transform: "scale(0.95)" }}
+            w={{ base: "100%", sm: "auto" }}
+            _hover={{ bg: "rgba(255,255,255,0.1)", transform: "scale(1.03)", textDecoration: "none" }}
+            _active={{ transform: "scale(0.97)" }}
             css={{
               fontFamily: "'Inter', sans-serif",
               fontSize: "0.95rem",
@@ -283,14 +297,18 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.65 }}
           flexDirection={{ base: "column", sm: "row" }}
-          alignItems="center"
+          alignItems="stretch"
           justifyContent="center"
           gap="3"
+          w="100%"
+          maxW={{ base: "xs", sm: "none" }}
+          mx="auto"
         >
           {pills.map(({ icon: Icon, label, value }) => (
             <Flex
               key={label}
               alignItems="center"
+              justifyContent={{ base: "space-between", sm: "flex-start" }}
               gap="3"
               px="4"
               py="2.5"
@@ -302,13 +320,15 @@ export default function HeroSection() {
                 WebkitBackdropFilter: "blur(16px)",
               }}
             >
-              <Box as="span" display="inline-flex" color="rgba(56, 189, 248, 1)">
-                <Icon size={14} />
-              </Box>
-              <Text color="rgba(255, 255, 255, 0.4)" fontSize="xs" fontFamily="'Inter', sans-serif">
-                {label}
-              </Text>
-              <Text color="rgba(255, 255, 255, 0.8)" fontSize="xs" fontWeight="medium" fontFamily="'Inter', sans-serif">
+              <Flex alignItems="center" gap="3">
+                <Box as="span" display="inline-flex" color="rgba(56, 189, 248, 1)" flexShrink={0}>
+                  <Icon size={14} />
+                </Box>
+                <Text color="rgba(255, 255, 255, 0.4)" fontSize="xs" fontFamily="'Inter', sans-serif" textAlign="left">
+                  {label}
+                </Text>
+              </Flex>
+              <Text color="rgba(255, 255, 255, 0.8)" fontSize="xs" fontWeight="medium" fontFamily="'Inter', sans-serif" whiteSpace="nowrap">
                 {value}
               </Text>
             </Flex>
@@ -316,13 +336,13 @@ export default function HeroSection() {
         </MotionFlex>
       </Box>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator - скрываем на маленьких экранах, чтобы не перегружать интерфейс */}
       <MotionBox
         position="absolute"
         bottom="8"
         left="50%"
         transform="translateX(-50%)"
-        display="flex"
+        display={{ base: "none", sm: "flex" }} // Скрыто на base
         flexDirection="column"
         alignItems="center"
         gap="2"
