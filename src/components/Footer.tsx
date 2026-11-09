@@ -2,6 +2,7 @@ import { Box, Flex, Text, Image } from "@chakra-ui/react";
 import { Mail, Phone } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import logoFacie from "../../src/imports/logo-facie.png";
+import logoMainProject from "../imports/main_project-logo.svg";
 import logo from '../imports/waterlevel_logo22_white.png';
 
 // Изменяем массив ссылок на объекты с ID соответствующих секций
@@ -236,7 +237,7 @@ export default function Footer() {
             >
               Партнёры
             </Text>
-            <Flex flexDirection="column" gap={3}>
+            <Flex alignItems="center" flexWrap="wrap" gap={3}>
               <a href="#" style={{ textDecoration: "none", width: "fit-content" }}>
                 <Box
                   display="inline-flex"
@@ -265,6 +266,30 @@ export default function Footer() {
                   />
                 </Box>
               </a>
+              <Box
+                display="inline-flex"
+                alignItems="center"
+                justifyContent="center"
+                p={3}
+                borderRadius="xl"
+                transition="all 0.2s"
+                _hover={{ transform: "scale(1.05)" }}
+                style={{
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
+                }}
+              >
+                <Image
+                  src={logoMainProject}
+                  alt="Платформа университетского технологического предпринимательства"
+                  w="66px"
+                  h="32px"
+                  objectFit="contain"
+                  transform="scale(1.25)"
+                />
+              </Box>
             </Flex>
           </Box>
         </Box>

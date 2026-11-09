@@ -13,7 +13,6 @@ interface GlowItem {
 }
 
 const MotionBox = motion.create(Box);
-const MotionText = motion.create(Text);
 const MotionFlex = motion.create(Flex);
 
 const floatVariants = {
@@ -73,9 +72,8 @@ export default function HeroSection() {
           custom={g.i}
           variants={floatVariants}
           animate="animate"
-          // Сделали размеры glow адаптивными (на десктопе возвращаем исходные)
-          w={{ base: `${g.size}px`, md: `${g.size * 2}px` }}
-          h={{ base: `${g.size}px`, md: `${g.size * 2}px` }}
+          w={`${g.size}px`}
+          h={`${g.size}px`}
           top={g.top}
           left={g.left}
           right={g.right}
@@ -201,7 +199,7 @@ export default function HeroSection() {
         </motion.h1>
 
         {/* Subtitle */}
-        <MotionText
+        <MotionBox
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.35 }}
@@ -217,9 +215,17 @@ export default function HeroSection() {
             lineHeight: 1.6,
           }}
         >
-          Прогнозирование и анализ паводковых ситуаций на основе данных гидрологических
-          датчиков и спутниковых снимков. Защита населения и инфраструктуры.
-        </MotionText>
+          <Text>
+            Прогнозирование и анализ паводковых ситуаций на основе данных гидрологических
+            датчиков и спутниковых снимков. Защита населения и инфраструктуры.
+          </Text>
+          <Box as="hr" border="0" borderTop="2px solid" borderColor="rgba(255, 255, 255, 0.2)" my="6" />
+          <Text>
+            Проект реализован при поддержке Фонда содействия инновациям в рамках программы
+            {" "}"Студенческий стартап" мероприятия "Платформа университетского технологического
+            предпринимательства" федерального проекта “Технологии”.
+          </Text>
+        </MotionBox>
 
         {/* CTAs */}
         <MotionFlex
